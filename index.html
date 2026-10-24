@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Renewal Radar</title>
+  <meta name="description" content="See your next Medi-Cal or CalFresh renewal and report dates, with the official rule behind each one. Nothing stored, nothing sent.">
+  <link rel="stylesheet" href="css/styles.css">
+  <script type="module" src="js/main.js"></script>
+</head>
+<body>
+  <main>
+    <header class="intro">
+      <h1>Renewal Radar</h1>
+      <p class="lede">See when your Medi-Cal or CalFresh renewal and report dates are coming, and why.</p>
+      <p class="privacy">Nothing you enter is stored or sent anywhere. It stays on your phone.</p>
+      <noscript><p class="fallback">This page needs JavaScript turned on to work out your dates.</p></noscript>
+    </header>
+
+    <section id="benefit-section" aria-labelledby="benefit-heading">
+      <h2 id="benefit-heading">Which benefit?</h2>
+      <div id="benefit-picker" class="choices" role="group" aria-labelledby="benefit-heading">
+        <button type="button" class="choice" data-value="medical" aria-pressed="false">Medi-Cal</button>
+        <button type="button" class="choice" data-value="calfresh" aria-pressed="false">CalFresh</button>
+      </div>
+    </section>
+
+    <section id="month-section" hidden aria-labelledby="month-heading">
+      <h2 id="month-heading">The month on your last approval or renewal letter</h2>
+      <div class="selects">
+        <label class="visually-hidden" for="month">Month</label>
+        <select id="month"></select>
+        <label class="visually-hidden" for="year">Year</label>
+        <select id="year"></select>
+      </div>
+      <p class="hint">Look for the date your benefits were approved or renewed. If you have more than one letter, use the newest.</p>
+    </section>
+
+    <section id="question-medical" hidden aria-labelledby="qm-heading">
+      <h2 id="qm-heading">One more question</h2>
+      <p>Check that all of these are true for you:</p>
+      <ul class="checklist">
+        <li>You are 19 to 64 years old.</li>
+        <li>You have Medi-Cal because of your income.</li>
+        <li>You are not pregnant, and you did not have a baby in the last 12 months.</li>
+        <li>You are not American Indian or Alaska Native.</li>
+        <li>You do not have Medicare.</li>
+      </ul>
+      <p class="question">Are all of these true for you?</p>
+      <div class="choices three" role="group" aria-label="Are all of these true for you?">
+        <button type="button" class="choice" data-value="yes" aria-pressed="false">Yes</button>
+        <button type="button" class="choice" data-value="no" aria-pressed="false">No</button>
+        <button type="button" class="choice" data-value="unsure" aria-pressed="false">Not sure</button>
+      </div>
+    </section>
+
+    <section id="question-calfresh" hidden aria-labelledby="qc-heading">
+      <h2 id="qc-heading">One more question</h2>
+      <p class="question">Is anyone in your household 60 or older, or living with a disability?</p>
+      <div class="choices three" role="group" aria-label="Is anyone in your household 60 or older, or living with a disability?">
+        <button type="button" class="choice" data-value="yes" aria-pressed="false">Yes</button>
+        <button type="button" class="choice" data-value="no" aria-pressed="false">No</button>
+        <button type="button" class="choice" data-value="unsure" aria-pressed="false">Not sure</button>
+      </div>
+    </section>
+
+    <section id="results-section" hidden aria-labelledby="results-heading">
+      <h2 id="results-heading">Your dates</h2>
+      <div id="results" aria-live="polite"></div>
+    </section>
+  </main>
+</body>
+</html>

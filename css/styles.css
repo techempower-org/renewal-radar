@@ -1,0 +1,69 @@
+/* Slice 1: layout and controls only. Themes, font and polish come in slice 5. */
+:root {
+  --bg: #fbf9f4;
+  --ink: #1d2b2e;
+  --teal: #0f5e63;
+  --teal-ink: #ffffff;
+  --amber-bg: #fff1d6;
+  --amber-ink: #5a3a00;
+  --muted: #4d5c5f;
+  --line: #d7dcdc;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  font-size: 18px;
+  line-height: 1.5;
+}
+main { max-width: 36rem; margin: 0 auto; padding: 1rem 1rem 3rem; }
+h1 { color: var(--teal); font-size: 2rem; margin: 0.5rem 0 0.25rem; }
+h2 { color: var(--teal); font-size: 1.25rem; margin: 2rem 0 0.75rem; }
+.lede { margin: 0 0 0.5rem; }
+.privacy, .hint, .toggle-hint { color: var(--muted); font-size: 0.95rem; }
+.choices { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+.choice {
+  flex: 1 1 8rem;
+  min-height: 48px;
+  padding: 0.75rem 1rem;
+  font: inherit;
+  font-weight: 700;
+  color: var(--teal);
+  background: transparent;
+  border: 2px solid var(--teal);
+  border-radius: 10px;
+  cursor: pointer;
+}
+.choice.selected { background: var(--teal); color: var(--teal-ink); }
+.selects { display: flex; gap: 0.75rem; }
+select {
+  flex: 1 1 8rem;
+  min-height: 48px;
+  font: inherit;
+  padding: 0.5rem 0.75rem;
+  border: 2px solid var(--teal);
+  border-radius: 10px;
+  background: #fff;
+  color: var(--ink);
+}
+.checklist { padding-left: 1.25rem; }
+.question { font-weight: 700; }
+.visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+.banner { background: var(--amber-bg); color: var(--amber-ink); border-radius: 10px; padding: 1rem; margin-bottom: 1rem; }
+.banner p { margin: 0 0 0.5rem; font-weight: 700; }
+.note { background: #fff; border: 1px solid var(--line); border-radius: 10px; padding: 0.75rem 1rem; margin: 0.75rem 0; }
+.note p { margin: 0 0 0.5rem; }
+.timeline { list-style: none; padding: 0; margin: 1rem 0; border-left: 4px solid var(--teal); }
+.entry { padding: 0.25rem 0 1rem 1rem; }
+.entry .date { margin: 0; font-weight: 700; font-size: 1.15rem; color: var(--teal); }
+.entry .label { margin: 0.25rem 0 0; font-weight: 700; }
+.entry .action { margin: 0.25rem 0 0.5rem; }
+.approx-label { margin: 0; color: var(--amber-ink); font-size: 0.95rem; }
+.why summary { cursor: pointer; color: var(--teal); font-size: 0.95rem; }
+.source { margin: 0.5rem 0 0; font-size: 0.95rem; }
+.quote { color: var(--muted); }
+.toggle { display: flex; gap: 0.75rem; margin-bottom: 1rem; }
+.always { margin-top: 1.5rem; border-top: 1px solid var(--line); padding-top: 1rem; }
+.final-word { font-weight: 700; }

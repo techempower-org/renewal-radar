@@ -1,0 +1,12 @@
+{
+  "name": "renewal-radar",
+  "version": "0.1.0",
+  "description": "Shows your next Medi-Cal or CalFresh renewal and report windows, with the official rule behind each date and a calendar reminder file. Nothing stored, nothing sent.",
+  "type": "module",
+  "private": true,
+  "license": "AGPL-3.0-or-later",
+  "scripts": {
+    "test": "node --test 'test/*.test.js'",
+    "start": "python3 -m http.server 8080"
+  }
+}
