@@ -133,5 +133,9 @@ for (const s of [sections.qMedical, sections.qCalfresh]) {
   });
 }
 
+// Optional ?theme=light|dark for demos and screenshots; otherwise the phone's setting rules.
+const themeParam = new URLSearchParams(location.search).get('theme');
+if (themeParam === 'light' || themeParam === 'dark') document.documentElement.dataset.theme = themeParam;
+
 fillSelects();
 document.documentElement.classList.add('js');

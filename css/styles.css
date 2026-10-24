@@ -1,73 +1,174 @@
-/* Slice 1: layout and controls only. Themes, font and polish come in slice 5. */
-:root {
-  --bg: #fbf9f4;
-  --ink: #1d2b2e;
-  --teal: #0f5e63;
-  --teal-ink: #ffffff;
-  --amber-bg: #fff1d6;
-  --amber-ink: #5a3a00;
-  --muted: #4d5c5f;
-  --line: #d7dcdc;
+/* Renewal Radar — calm, warm, trustworthy. Like a good library help-desk
+   handout. Deep teal, warm paper, amber only for the heads-up. No red, no
+   gradients, no logos. Light and dark follow the phone's setting. */
+
+@font-face {
+  font-family: 'Atkinson Hyperlegible';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('../fonts/AtkinsonHyperlegible-Regular.woff2') format('woff2');
 }
+@font-face {
+  font-family: 'Atkinson Hyperlegible';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('../fonts/AtkinsonHyperlegible-Bold.woff2') format('woff2');
+}
+
+:root {
+  color-scheme: light dark;
+  --bg: #faf7f1;          /* warm paper */
+  --surface: #ffffff;
+  --ink: #1c2a2d;
+  --muted: #4a5a5d;
+  --line: #d8ddda;
+  --teal: #0f5e63;        /* headings, buttons, rail */
+  --teal-ink: #ffffff;    /* text on a teal fill */
+  --teal-soft: #e3f0f0;   /* selected row tint, details background */
+  --amber-bg: #fbe9c6;    /* heads-up only */
+  --amber-ink: #5a3a00;
+  --focus: #b8860b;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0f1c1e;
+    --surface: #16262a;
+    --ink: #e8eeec;
+    --muted: #a7b4b3;
+    --line: #2a3a3c;
+    --teal: #7fc8cc;
+    --teal-ink: #0f1c1e;
+    --teal-soft: #15393d;
+    --amber-bg: #3a2a0a;
+    --amber-ink: #f6d28a;
+    --focus: #f6d28a;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0f1c1e;
+  --surface: #16262a;
+  --ink: #e8eeec;
+  --muted: #a7b4b3;
+  --line: #2a3a3c;
+  --teal: #7fc8cc;
+  --teal-ink: #0f1c1e;
+  --teal-soft: #15393d;
+  --amber-bg: #3a2a0a;
+  --amber-ink: #f6d28a;
+  --focus: #f6d28a;
+}
+
 * { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
 body {
   margin: 0;
   background: var(--bg);
   color: var(--ink);
-  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  font-family: 'Atkinson Hyperlegible', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   font-size: 18px;
   line-height: 1.5;
 }
-main { max-width: 36rem; margin: 0 auto; padding: 1rem 1rem 3rem; }
-h1 { color: var(--teal); font-size: 2rem; margin: 0.5rem 0 0.25rem; }
-h2 { color: var(--teal); font-size: 1.25rem; margin: 2rem 0 0.75rem; }
-.lede { margin: 0 0 0.5rem; }
-.privacy, .hint, .toggle-hint { color: var(--muted); font-size: 0.95rem; }
+main { max-width: 36rem; margin: 0 auto; padding: 1.25rem 1rem 4rem; }
+
+h1 { color: var(--teal); font-size: 2rem; line-height: 1.15; margin: 0.75rem 0 0.5rem; letter-spacing: -0.01em; }
+h2 { color: var(--teal); font-size: 1.3rem; line-height: 1.25; margin: 2.25rem 0 0.75rem; }
+p { margin: 0 0 0.75rem; }
+a { color: var(--teal); text-underline-offset: 0.15em; }
+
+.lede { font-size: 1.1rem; }
+.privacy, .hint, .toggle-hint, .this-month, .fallback { color: var(--muted); font-size: 0.95rem; }
+.fallback { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 0.75rem 1rem; }
+
+section { animation: reveal 220ms ease-out; }
+@keyframes reveal { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) { section { animation: none; } }
+
+/* Controls: thumb-sized, full width on phones */
 .choices { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+.choice, .primary, select {
+  min-height: 48px;
+  font: inherit;
+  border-radius: 12px;
+}
 .choice {
   flex: 1 1 8rem;
-  min-height: 48px;
   padding: 0.75rem 1rem;
-  font: inherit;
   font-weight: 700;
   color: var(--teal);
-  background: transparent;
+  background: var(--surface);
   border: 2px solid var(--teal);
-  border-radius: 10px;
   cursor: pointer;
 }
+.choice:hover { background: var(--teal-soft); }
 .choice.selected { background: var(--teal); color: var(--teal-ink); }
+.choice:focus-visible, .primary:focus-visible, select:focus-visible, summary:focus-visible, a:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+}
 .selects { display: flex; gap: 0.75rem; }
 select {
   flex: 1 1 8rem;
-  min-height: 48px;
-  font: inherit;
   padding: 0.5rem 0.75rem;
   border: 2px solid var(--teal);
-  border-radius: 10px;
-  background: #fff;
+  background: var(--surface);
   color: var(--ink);
 }
-.checklist { padding-left: 1.25rem; }
+.checklist { padding-left: 1.25rem; margin: 0 0 1rem; }
+.checklist li { margin-bottom: 0.35rem; }
 .question { font-weight: 700; }
-.visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
-.banner { background: var(--amber-bg); color: var(--amber-ink); border-radius: 10px; padding: 1rem; margin-bottom: 1rem; }
-.banner p { margin: 0 0 0.5rem; font-weight: 700; }
-.note { background: #fff; border: 1px solid var(--line); border-radius: 10px; padding: 0.75rem 1rem; margin: 0.75rem 0; }
+.visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+/* Results */
+.banner { background: var(--amber-bg); color: var(--amber-ink); border-radius: 12px; padding: 1rem 1.1rem; margin: 0 0 1.25rem; }
+.banner p { margin: 0 0 0.5rem; font-weight: 700; font-size: 1.05rem; }
+.banner .why summary, .banner a, .banner .quote { color: var(--amber-ink); }
+.note { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 0.85rem 1.1rem; margin: 0.75rem 0; }
 .note p { margin: 0 0 0.5rem; }
-.timeline { list-style: none; padding: 0; margin: 1rem 0; border-left: 4px solid var(--teal); }
-.entry { padding: 0.25rem 0 1rem 1rem; }
-.entry .date { margin: 0; font-weight: 700; font-size: 1.15rem; color: var(--teal); }
-.entry .label { margin: 0.25rem 0 0; font-weight: 700; }
+.counted-forward { font-weight: 700; }
+.future { font-weight: 700; }
+
+.timeline { list-style: none; padding: 0; margin: 1rem 0 1.25rem; border-left: 4px solid var(--teal); }
+.entry { position: relative; padding: 0.1rem 0 1.25rem 1.25rem; }
+.entry::before {
+  content: '';
+  position: absolute;
+  left: -0.75rem;
+  top: 0.55rem;
+  width: 1rem;
+  height: 1rem;
+  border-radius: 50%;
+  background: var(--bg);
+  border: 4px solid var(--teal);
+}
+.entry .date { margin: 0; font-weight: 700; font-size: 1.2rem; color: var(--teal); }
+.entry .label { margin: 0.2rem 0 0; font-weight: 700; }
 .entry .action { margin: 0.25rem 0 0.5rem; }
-.approx-label { margin: 0; color: var(--amber-ink); font-size: 0.95rem; }
-.why summary { cursor: pointer; color: var(--teal); font-size: 0.95rem; }
+.approx-label { margin: 0; color: var(--amber-ink); background: var(--amber-bg); display: inline-block; padding: 0.1rem 0.5rem; border-radius: 999px; font-size: 0.9rem; }
+.inline-note { margin-top: 0.75rem; }
+
+.why { margin-top: 0.25rem; }
+.why summary { cursor: pointer; color: var(--teal); font-size: 0.95rem; font-weight: 700; list-style: none; }
+.why summary::-webkit-details-marker { display: none; }
+.why summary::before { content: '\25B8\00a0'; }
+.why[open] summary::before { content: '\25BE\00a0'; }
 .source { margin: 0.5rem 0 0; font-size: 0.95rem; }
 .quote { color: var(--muted); }
+
 .toggle { display: flex; gap: 0.75rem; margin-bottom: 1rem; }
+.calendar { margin: 1.25rem 0; }
+.primary {
+  width: 100%;
+  min-height: 56px;
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: var(--teal-ink);
+  background: var(--teal);
+  border: 2px solid var(--teal);
+  cursor: pointer;
+}
+.primary:hover { filter: brightness(1.08); }
+.calendar .hint { margin-top: 0.5rem; }
 .always { margin-top: 1.5rem; border-top: 1px solid var(--line); padding-top: 1rem; }
 .final-word { font-weight: 700; }
-.this-month { color: var(--muted); font-size: 0.95rem; margin: 0 0 0.75rem; }
-.counted-forward { font-weight: 700; }
-.calendar { margin: 1rem 0; }
-.primary { width: 100%; min-height: 56px; font: inherit; font-weight: 700; font-size: 1.1rem; color: var(--teal-ink); background: var(--teal); border: 2px solid var(--teal); border-radius: 10px; cursor: pointer; }
