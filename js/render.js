@@ -1,7 +1,7 @@
 // Turns a compute() result into DOM. Uses textContent only; no data goes
 // through innerHTML.
 
-import { formatDate } from './months.js';
+import { format, formatDate } from './months.js';
 import { SOURCES, FINAL_WORD, HAVE_READY } from './sources.js';
 
 function el(tag, attrs = {}, children = []) {
@@ -77,7 +77,13 @@ export function renderFooterLines() {
  */
 export function renderResults(root, result, ctx) {
   root.replaceChildren();
-  if (!result || result.kind === 'future') return;
+  if (!result) return;
+  if (result.kind === 'future') {
+    root.append(el('p', { class: 'note future',
+      text: "That month hasn't happened yet. Check the date on your letter." }));
+    return;
+  }
+  root.append(el('p', { class: 'this-month', text: `We counted this month as ${format(ctx.today)}.` }));
 
   if (result.kind === 'medical-unsure') {
     root.append(el('p', { class: 'toggle-hint', text: 'Your county notice tells you which one applies to you.' }));

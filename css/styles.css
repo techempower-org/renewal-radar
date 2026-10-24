@@ -67,3 +67,5 @@ select {
 .toggle { display: flex; gap: 0.75rem; margin-bottom: 1rem; }
 .always { margin-top: 1.5rem; border-top: 1px solid var(--line); padding-top: 1rem; }
 .final-word { font-weight: 700; }
+.this-month { color: var(--muted); font-size: 0.95rem; margin: 0 0 0.75rem; }
+.counted-forward { font-weight: 700; }
