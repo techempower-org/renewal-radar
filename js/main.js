@@ -4,6 +4,7 @@
 import { MONTH_NAMES } from './months.js';
 import { compute } from './rules.js';
 import { renderResults } from './render.js';
+import { buildIcs, stampFromDate } from './ics.js';
 
 const now = new Date();
 const today = { year: now.getFullYear(), month: now.getMonth() + 1 };
@@ -75,8 +76,22 @@ function showResults() {
     today,
     toggle: state.toggle,
     onToggle: (side) => { state.toggle = side; showResults(); },
+    onDownload: (entries) => downloadIcs(entries),
   });
   sections.results.hidden = false;
+}
+
+function downloadIcs(entries) {
+  const text = buildIcs(entries, today, { benefit: state.benefit, stamp: stampFromDate(new Date()) });
+  const blob = new Blob([text], { type: 'text/calendar;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'renewal-radar.ics';
+  document.body.append(a);
+  a.click();
+  a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 10_000);
 }
 
 // Benefit picker

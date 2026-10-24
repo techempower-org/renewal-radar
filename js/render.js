@@ -75,6 +75,14 @@ export function renderFooterLines() {
  * @param {object} result
  * @param {{today, toggle: 'newAdult'|'standard', onToggle: (side) => void}} ctx
  */
+function calendarButton(ctx, entries) {
+  const wrap = el('div', { class: 'calendar' });
+  const b = el('button', { type: 'button', class: 'primary', text: 'Add these to my calendar' });
+  b.addEventListener('click', () => ctx.onDownload(entries));
+  wrap.append(b, el('p', { class: 'hint', text: 'Downloads a small calendar file (renewal-radar.ics) with a reminder 7 days before each date. Open it and your phone\u2019s calendar will offer to add them.' }));
+  return wrap;
+}
+
 export function renderResults(root, result, ctx) {
   root.replaceChildren();
   if (!result) return;
@@ -98,9 +106,12 @@ export function renderResults(root, result, ctx) {
       bar.append(b);
     }
     root.append(bar);
-    root.append(renderSchedule(ctx.toggle === 'standard' ? result.standard : result.newAdult, ctx));
+    const shown = ctx.toggle === 'standard' ? result.standard : result.newAdult;
+    root.append(renderSchedule(shown, ctx));
+    if (shown.entries.length) root.append(calendarButton(ctx, shown.entries));
   } else {
     root.append(renderSchedule(result, ctx));
+    if (result.entries.length) root.append(calendarButton(ctx, result.entries));
   }
 
   root.append(renderFooterLines());
