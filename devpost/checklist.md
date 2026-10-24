@@ -74,15 +74,15 @@ Build mode: fast
 
 ## Code Tour and App Map
 
-- [ ] Learning activity complete — guided route, focused alternative, prior practice connected, or brief recap
-- [ ] Optional edit and transfer reflection addressed — offered/declined/already covered/not applicable as appropriate
-- [ ] `devpost/app-map.html` generated from finished code, checked, and shown, including a project-grounded practice to reuse
+- [x] Learning activity complete — brief evidence-based recap (learner asked the build to finish and stop; no live exercise)
+- [x] Optional edit and transfer reflection addressed — edit not applicable; one transfer question offered in the final report, answer optional
+- [x] `devpost/app-map.html` generated from finished code, checked, and shown, including a project-grounded practice to reuse
 
-Activity and evidence:
-Route and stops:
-Edit outcome:
-Reflection:
-Activity mode:
+Activity and evidence: Recap connected to the learner's goal ("see how much an interview-first plan changes a small build"). Evidence: the PRD's January 2026 example (`prd.md > Medi-Cal New Adult Schedule`) versus the spec's derived 18-month window rule; `test/rules.test.js` "M8: January 2026 New Adult stays yearly once" failed on first run, fixed in `mediCalSchedule` (js/rules.js), recorded under Revisions. Also: the interview decided the past-month, future-month and CalFresh Not-sure behaviours (`prd.md > Counting Forward`, `Month Picker`, `CalFresh Different-Schedule Message`) before any code, each now a test in `test/edges.test.js` and `test/calfresh.test.js`.
+Route and stops: Reference route only, not toured: js/rules.js `nextNewAdult` + `SIX_MONTH_START`; js/render.js `whyThisDate` + js/sources.js; js/ics.js `buildIcs` + js/main.js `downloadIcs`.
+Edit outcome: Not applicable (learner directed finish-and-stop).
+Reflection: Offered once in the final report; not answered yet.
+Activity mode: Recap with map; headless Playwright review at 390 px by the learner stood in for the hands-on checkpoint.
 
 ## Revisions
 

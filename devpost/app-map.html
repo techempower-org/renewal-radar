@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Renewal Radar App Map</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%230f5e63'/%3E%3Cpath d='M32 32 L32 6 A26 26 0 0 1 54.5 19 Z' fill='%23fbe9c6'/%3E%3Ccircle cx='32' cy='32' r='3.5' fill='%23faf7f1'/%3E%3C/svg%3E">
+<style>
+  :root { color-scheme: light dark; --bg:#faf7f1; --surface:#fff; --ink:#1c2a2d; --muted:#4a5a5d; --line:#d8ddda; --teal:#0f5e63; --amber-bg:#fbe9c6; --amber-ink:#5a3a00; --code:#eef3f3; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --bg:#0f1c1e; --surface:#16262a; --ink:#e8eeec; --muted:#a7b4b3; --line:#2a3a3c; --teal:#7fc8cc; --amber-bg:#3a2a0a; --amber-ink:#f6d28a; --code:#0b1517; } }
+  :root[data-theme="dark"] { --bg:#0f1c1e; --surface:#16262a; --ink:#e8eeec; --muted:#a7b4b3; --line:#2a3a3c; --teal:#7fc8cc; --amber-bg:#3a2a0a; --amber-ink:#f6d28a; --code:#0b1517; }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--ink); font: 17px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  main { max-width: 44rem; margin: 0 auto; padding: 1.25rem 1rem 3rem; }
+  h1, h2 { color: var(--teal); line-height: 1.2; }
+  h1 { font-size: 1.9rem; margin: .5rem 0 .25rem; }
+  h2 { font-size: 1.25rem; margin: 2rem 0 .5rem; }
+  .muted { color: var(--muted); font-size: .95rem; }
+  code, pre { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: .92em; }
+  code { background: var(--code); padding: .1em .35em; border-radius: 6px; }
+  pre { background: var(--code); padding: .75rem 1rem; border-radius: 10px; overflow-x: auto; }
+  .card { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 1rem 1.1rem; margin: .75rem 0; }
+  .practice { background: var(--amber-bg); color: var(--amber-ink); border: none; }
+  .practice h2, .practice code { color: inherit; }
+  ol.route { padding-left: 1.25rem; }
+  ol.route li { margin-bottom: .75rem; }
+  details { margin: .5rem 0; }
+  summary { cursor: pointer; color: var(--teal); font-weight: 700; }
+  svg text { font: 13px system-ui, sans-serif; fill: var(--ink); }
+  svg .box { fill: var(--surface); stroke: var(--teal); stroke-width: 2; }
+  svg .arrow { stroke: var(--teal); stroke-width: 2; fill: none; marker-end: url(#m); }
+  svg .label { fill: var(--muted); font-size: 12px; }
+  a { color: var(--teal); }
+</style>
+</head>
+<body>
+<main>
+  <h1>Renewal Radar: App Map</h1>
+  <p class="muted">A take-home guide to what was built. Snapshot of commit <code>b2f9028</code> on 2026-10-23; the code can drift after this.</p>
+
+  <h2>What it is</h2>
+  <p>One static web page. A person picks Medi-Cal or CalFresh, enters the month on their last approval letter, answers one question, and sees a timeline of renewal and report dates, each with the official letter and quote behind it, plus a one-tap calendar file. Nothing is stored or sent.</p>
+  <p>Four small pieces do the work: the page shell and wiring (<code>index.html</code>, <code>js/main.js</code>), the pure date rules (<code>js/rules.js</code>) with their sources (<code>js/sources.js</code>), the renderer (<code>js/render.js</code>), and the calendar builder (<code>js/ics.js</code>). Tests in <code>test/</code> run with Node's built-in runner and need no install.</p>
+
+  <h2>One action, end to end</h2>
+  <p>Tap <strong>Yes</strong> on the Medi-Cal question after entering May 2026:</p>
+  <svg viewBox="0 0 680 150" width="100%" role="img" aria-label="Diagram: the Yes tap goes to main.js showResults, which calls rules.js compute, which returns entries that render.js draws as the timeline; the calendar button calls ics.js buildIcs">
+    <defs><marker id="m" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#0f5e63"/></marker></defs>
+    <rect class="box" x="8" y="30" width="120" height="54" rx="10"/><text x="68" y="52" text-anchor="middle">Tap Yes</text><text x="68" y="70" text-anchor="middle" class="label">index.html</text>
+    <path class="arrow" d="M128 57 L172 57"/>
+    <rect class="box" x="174" y="30" width="140" height="54" rx="10"/><text x="244" y="52" text-anchor="middle">showResults()</text><text x="244" y="70" text-anchor="middle" class="label">js/main.js</text>
+    <path class="arrow" d="M314 57 L358 57"/>
+    <rect class="box" x="360" y="30" width="140" height="54" rx="10"/><text x="430" y="52" text-anchor="middle">compute()</text><text x="430" y="70" text-anchor="middle" class="label">js/rules.js</text>
+    <path class="arrow" d="M500 57 L544 57"/>
+    <rect class="box" x="546" y="30" width="126" height="54" rx="10"/><text x="609" y="52" text-anchor="middle">renderResults()</text><text x="609" y="70" text-anchor="middle" class="label">js/render.js</text>
+    <path class="arrow" d="M609 84 L609 108"/>
+    <rect class="box" x="470" y="110" width="202" height="34" rx="10"/><text x="571" y="132" text-anchor="middle">Timeline + "Add to calendar"</text>
+    <path class="arrow" d="M470 127 L410 127"/>
+    <rect class="box" x="300" y="110" width="108" height="34" rx="10"/><text x="354" y="132" text-anchor="middle">buildIcs()</text>
+    <text x="354" y="104" text-anchor="middle" class="label">js/ics.js, on tap</text>
+  </svg>
+
+  <h2>A reference route through the code</h2>
+  <p class="muted">Three stops. This route was prepared from the finished code, not toured interactively.</p>
+  <ol class="route">
+    <li><strong>The six-month rule.</strong> <code>js/rules.js</code>, <code>nextNewAdult</code> (around line 28) and the constant <code>SIX_MONTH_START</code>. A renewal on or after March 2027 is followed by one 6 months later; otherwise 12. That one comparison is the kernel of the whole app. <code>mediCalSchedule</code> walks it forward, drops past entries, and stops at the 18-month window.</li>
+    <li><strong>Where a date gets its source.</strong> Every entry carries <code>ruleIds</code> such as <code>['M2','M3']</code>. <code>js/render.js</code>, <code>whyThisDate</code>, looks each id up in <code>js/sources.js</code> and builds the "Why this date?" disclosure. Nothing can appear on the page without an id, and a test refuses any id below high confidence.</li>
+    <li><strong>The payoff.</strong> <code>js/ics.js</code>, <code>buildIcs</code>, turns the same entries into an iCalendar file; <code>js/main.js</code>, <code>downloadIcs</code>, hands it to the browser as a download. <code>test/ics.test.js</code> parses the file back line by line.</li>
+  </ol>
+
+  <h2>To change this, start here</h2>
+  <div class="card">
+    <ul>
+      <li><strong>Wording on the page</strong> (labels, actions, the summary line): <code>js/rules.js</code>, inside <code>mediCalSchedule</code> and <code>calFreshStandard</code>. The checklist question lives in <code>index.html</code>.</li>
+      <li><strong>A rule or its source</strong>: add or edit the row in <code>research/FACTS.md</code> first, mirror it in <code>js/sources.js</code>, then use its id in <code>js/rules.js</code>. The tests in <code>test/rules.test.js</code> and <code>test/calfresh.test.js</code> will tell you if a low-confidence id leaked.</li>
+      <li><strong>How far ahead the timeline looks</strong>: <code>WINDOW_MONTHS</code> at the top of <code>js/rules.js</code>.</li>
+      <li><strong>Colors and themes</strong>: the custom properties at the top of <code>css/styles.css</code>, one block each for light and dark.</li>
+      <li><strong>Reminder timing</strong>: the <code>alarms</code> arrays on each entry's <code>event</code> in <code>js/rules.js</code> (<code>-P7D</code> is 7 days before, <code>PT9H</code> is 9 a.m. the same day).</li>
+    </ul>
+  </div>
+
+  <div class="card practice">
+    <h2>A practice to reuse</h2>
+    <p><strong>Write the example before the rule, then let a test referee between them.</strong> The PRD recorded a plain example, "January 2026, Yes: January 2027, January 2028, July 2028" (<code>devpost/prd.md</code>, Medi-Cal New Adult Schedule). The spec later derived a tidy 18-month window rule. The test for that example (<code>test/rules.test.js</code>, "M8: January 2026 New Adult stays yearly once") failed on the first run: the window hid July 2028, the very renewal that shows the new six-month rhythm. The fix was one line in <code>mediCalSchedule</code>, recorded under Revisions in <code>devpost/checklist.md</code>. On another project: when an interview produces a concrete example, keep it verbatim as a test case. Derived rules written later should have to pass it, not the other way round.</p>
+  </div>
+
+  <h2>Run it again</h2>
+  <pre>python3 -m http.server 8080 --bind 127.0.0.1
+# open http://127.0.0.1:8080/   (add ?theme=dark to force the dark theme)
+npm test</pre>
+  <p class="muted">The repo's planning documents (scope, PRD, spec, checklist) are in <code>devpost/</code>; the sourced rules are in <code>research/FACTS.md</code>.</p>
+</main>
+</body>
+</html>
