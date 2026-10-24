@@ -50,6 +50,7 @@ function entryItem(entry) {
 /** Renders one schedule (entries, notes, banner) into a fragment. */
 export function renderSchedule(result, { today }) {
   const frag = document.createDocumentFragment();
+  if (result.summary) frag.append(el('p', { class: 'summary', text: result.summary }));
   if (result.banner) frag.append(noteBlock(result.banner, 'banner'));
   for (const n of result.notes) frag.append(noteBlock(n));
   if (result.countedForward) {

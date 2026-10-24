@@ -62,11 +62,15 @@ Build mode: fast
 ## Hands-on Checkpoints
 
 - [x] Early usable behavior explored — after slice 1 (Medi-Cal demo case). At the learner's request the agent stated what a person would see and continued; the hands-on review was folded into the final kick-the-tires session.
-- [ ] Final kick-the-tires exploration and feedback completed
+- [x] Final kick-the-tires exploration and feedback completed — learner reviewed with headless Playwright at 390 px, light and dark: looked right, no console errors; four changes requested and listed under Final Review.
 
 ## Final Review
 
-- [ ] Final review complete — feedback resolved and learner confirms ready to ship
+- [x] One-line summary at the top of the results (rules.js `summary`, rendered first; tested for Medi-Cal 6-month, 12-month, CalFresh and counted-forward cases)
+- [x] Footer: "reminder tool, not eligibility advice", TechEMPOWER line, link to `research/FACTS.md` (index.html, PRD updated)
+- [x] Commit `skills-lock.json`; ignore `.agents/`, `.claude/`, `agent/`; README now names the skill pack and the lockfile
+- [x] Review server rebound to 127.0.0.1:8080
+- [x] Final review complete — feedback resolved; learner's review found no defects and directed the build to finish and stop (verified: `npm test` 27 pass; Playwright 390 px light and dark, no console errors, download produced renewal-radar.ics with 5 events)
 
 ## Code Tour and App Map
 

@@ -136,6 +136,8 @@ Source: `scope.md > What "Working" Looks Like`.
 
 ### Always-Visible Lines
 - Header: "Nothing you enter is stored or sent anywhere. It stays on your phone."
+- Top of every result: a one-line plain summary, for example "Next: Medi-Cal renewal in May 2027, then every 6 months." (final review).
+- Page footer: "Renewal Radar is a reminder tool, not eligibility advice. Made by TechEMPOWER, a nonprofit in Grass Valley, California." with a link to the sources file in the repo (final review).
 - Under every result: "Your county notice is the final word. If anything here doesn't match your notice, trust the notice."
 - Under every result: "Have recent proof of income and any changes in your household ready."
   - [ ] All three lines are present whenever results show.

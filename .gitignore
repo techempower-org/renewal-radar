@@ -5,3 +5,8 @@ devpost/learner-profile.md
 .env
 .env.*
 !.env.example
+
+# Devpost Learn skill pack folders (not part of the app; skills-lock.json records the versions used)
+.agents/
+.claude/
+agent/

@@ -2,7 +2,7 @@
 // as {year, month} and returns plain data. Nothing here touches the DOM or
 // the clock. Every entry and note cites at least one rule id from sources.js.
 
-import { addMonths, compare, format } from './months.js';
+import { addMonths, compare, format, formatDate } from './months.js';
 
 /** Six-month Medi-Cal renewals begin with renewals due in March 2027 (M7). */
 export const SIX_MONTH_START = { year: 2027, month: 3 };
@@ -104,7 +104,20 @@ function mediCalSchedule(last, today, next, kind) {
     }
   }
 
-  return { kind, entries, notes: [], banner, countedForward };
+  let summary = null;
+  if (renewals.length) {
+    const first = format(renewals[0]);
+    if (kind === 'medical-new-adult' && banner) {
+      const firstSix = renewals.find((r) => compare(r, SIX_MONTH_START) >= 0);
+      summary = compare(renewals[0], SIX_MONTH_START) >= 0
+        ? `Next: Medi-Cal renewal in ${first}, then every 6 months.`
+        : `Next: Medi-Cal renewal in ${first}, then every 6 months starting ${format(firstSix)}.`;
+    } else {
+      summary = `Next: Medi-Cal renewal in ${first}, then once a year.`;
+    }
+  }
+
+  return { kind, entries, notes: [], banner, countedForward, summary };
 }
 
 export function mediCalStandard(last, today) {
@@ -187,7 +200,20 @@ export function calFreshStandard(last, today) {
     base = recert;
   }
 
-  return { kind: 'calfresh-standard', entries, notes: [], banner: null, countedForward };
+  let summary = null;
+  const firstDue = entries.find((e) => e.ruleIds.includes('C4') && e.date.day === 5);
+  const firstRecert = entries.find((e) => e.approximate);
+  if (firstDue && firstRecert) {
+    summary = compare(firstDue.date, firstRecert.date) <= 0
+      ? `Next: CalFresh SAR 7 report due ${formatDate(firstDue.date)}, then a renewal about ${format(firstRecert.date)}.`
+      : `Next: CalFresh renewal about ${format(firstRecert.date)}, then a SAR 7 report due ${formatDate(firstDue.date)}.`;
+  } else if (firstDue) {
+    summary = `Next: CalFresh SAR 7 report due ${formatDate(firstDue.date)}.`;
+  } else if (firstRecert) {
+    summary = `Next: CalFresh renewal about ${format(firstRecert.date)}.`;
+  }
+
+  return { kind: 'calfresh-standard', entries, notes: [], banner: null, countedForward, summary };
 }
 
 /** C7: no dates at all. */
@@ -198,6 +224,7 @@ export function calFreshDifferent() {
     notes: [{ text: C7_TEXT, ruleIds: ['C7'] }],
     banner: null,
     countedForward: false,
+    summary: null,
   };
 }
 

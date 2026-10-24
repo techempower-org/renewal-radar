@@ -58,6 +58,10 @@ research/         FACTS.md, the sourced rules
 devpost/          planning docs from the hackathon curriculum
 ```
 
+## Hackathon curriculum
+
+The planning documents in `devpost/` were produced with the Devpost Learn **Build With AI: Basics** skill pack from [github.com/challengepost/learn-ai-basics](https://github.com/challengepost/learn-ai-basics). `skills-lock.json` records the exact skill versions used; the skill folders themselves are not committed.
+
 ## License
 
 Copyright (C) 2026 Techempower. Licensed under the GNU Affero General Public License, version 3 or later; see [LICENSE](LICENSE).

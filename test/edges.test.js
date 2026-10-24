@@ -50,3 +50,16 @@ test('counting forward applies 12-or-6 at each skipped step', () => {
   assert.deepEqual(renewals(r), ['January 2027', 'January 2028', 'July 2028']);
   assert.equal(r.countedForward, true);
 });
+
+test('summary lines', () => {
+  const s = (benefit, last, answer) => compute({ benefit, last, answer, today: OCT_2026 }).summary;
+  assert.equal(s('medical', ym(2026, 5), 'yes'), 'Next: Medi-Cal renewal in May 2027, then every 6 months.');
+  assert.equal(s('medical', ym(2026, 1), 'yes'), 'Next: Medi-Cal renewal in January 2027, then every 6 months starting January 2028.');
+  assert.equal(s('medical', ym(2026, 5), 'no'), 'Next: Medi-Cal renewal in May 2027, then once a year.');
+  assert.equal(s('calfresh', ym(2026, 10), 'no'), 'Next: CalFresh SAR 7 report due April 5, 2027, then a renewal about October 2027.');
+  assert.equal(s('calfresh', ym(2026, 2), 'no'), 'Next: CalFresh renewal about February 2027, then a SAR 7 report due August 5, 2027.');
+  assert.equal(s('calfresh', ym(2026, 10), 'yes'), null);
+  const unsure = compute({ benefit: 'medical', last: ym(2026, 5), answer: 'unsure', today: OCT_2026 });
+  assert.match(unsure.newAdult.summary, /every 6 months/);
+  assert.match(unsure.standard.summary, /once a year/);
+});
