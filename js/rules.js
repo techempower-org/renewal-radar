@@ -115,6 +115,92 @@ export function mediCalNewAdult(last, today) {
   return mediCalSchedule(last, today, nextNewAdult, 'medical-new-adult');
 }
 
+// ---------------------------------------------------------------- CalFresh
+
+const C7_TEXT =
+  "If anyone in your household is 60 or older or has a disability, your schedule may be different. Many of these households don't send a SAR 7 at 6 months. Check your newest notice or BenefitsCal, or call your county.";
+
+/**
+ * C1, C3 to C6, and C2 as an approximate reminder. Each 12-month cycle from a
+ * base month B: SAR 7 arrives in B+5, is due the 5th of B+6, late after the
+ * 11th, accepted until the first working day of B+7 (text only), and the
+ * recertification is about B+12, which starts the next cycle.
+ */
+export function calFreshStandard(last, today) {
+  const entries = [];
+  let countedForward = false;
+  let base = last;
+
+  for (;;) {
+    const arrival = addMonths(base, 5);
+    const submit = addMonths(base, 6);
+    const lastChance = addMonths(base, 7);
+    const recert = addMonths(base, 12);
+    if (!withinWindow(arrival, today)) break;
+
+    const cycle = [
+      {
+        date: arrival,
+        label: 'Your SAR 7 report form should arrive in the mail.',
+        action: "Keep it somewhere you'll find it.",
+        ruleIds: ['C1', 'C3'],
+        event: { title: `CalFresh SAR 7 form should arrive (${format(arrival)})`, alarms: ['-P7D'] },
+      },
+      {
+        date: { ...submit, day: 5 },
+        label: 'Your SAR 7 is due.',
+        action: `Send it back by this day. Report what happened in ${format(addMonths(submit, -1))}.`,
+        ruleIds: ['C4', 'C6'],
+        skippable: true,
+        event: { title: 'CalFresh SAR 7 due today', alarms: ['-P7D', 'PT9H'] },
+      },
+      {
+        date: { ...submit, day: 11 },
+        label: 'Last day before your SAR 7 is late.',
+        action: 'After this day it counts as late. Send it anyway.',
+        ruleIds: ['C4'],
+        note: {
+          text: `The county will still take it until the first working day of ${format(lastChance)}, but your benefits may be late.`,
+          ruleIds: ['C5'],
+        },
+        event: { title: 'Last day before your CalFresh SAR 7 is late', alarms: ['-P7D'] },
+      },
+      {
+        date: recert,
+        label: 'Your CalFresh renewal is due about now.',
+        action: 'Watch your mail for a renewal packet. Your notice gives the exact month.',
+        ruleIds: ['C2'],
+        approximate: true,
+        skippable: true,
+        event: { title: `CalFresh renewal due about now (${format(recert)})`, alarms: ['-P7D'] },
+      },
+    ];
+
+    for (const e of cycle) {
+      if (isPast(e.date, today)) {
+        if (e.skippable) countedForward = true;
+        continue;
+      }
+      delete e.skippable;
+      entries.push(e);
+    }
+    base = recert;
+  }
+
+  return { kind: 'calfresh-standard', entries, notes: [], banner: null, countedForward };
+}
+
+/** C7: no dates at all. */
+export function calFreshDifferent() {
+  return {
+    kind: 'calfresh-different',
+    entries: [],
+    notes: [{ text: C7_TEXT, ruleIds: ['C7'] }],
+    banner: null,
+    countedForward: false,
+  };
+}
+
 // ----------------------------------------------------------------- Routing
 
 /**
@@ -132,6 +218,12 @@ export function compute({ benefit, last, answer, today }) {
       newAdult: mediCalNewAdult(last, today),
       standard: mediCalStandard(last, today),
     };
+  }
+  if (benefit === 'calfresh') {
+    if (answer === 'yes') return calFreshDifferent();
+    const standard = calFreshStandard(last, today);
+    if (answer === 'unsure') standard.notes.unshift({ text: C7_TEXT, ruleIds: ['C7'] });
+    return standard;
   }
   throw new Error(`Unknown benefit: ${benefit}`);
 }
