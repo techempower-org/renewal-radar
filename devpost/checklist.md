@@ -9,7 +9,7 @@ Build mode: fast
 
 ## Slices
 
-- [ ] **1. Medi-Cal timeline end to end, six-month rule first**
+- [x] **1. Medi-Cal timeline end to end, six-month rule first**
   Becomes usable: Open the page, tap Medi-Cal, pick May 2026, answer the checklist Yes, and see the amber heads-up plus the timeline March 2027, May 2027, September 2027, November 2027, March 2028, May 2028, each with a "Why this date?" source. No shows the 12-month schedule; Not sure shows the toggle. The cycle walker already drops past entries and stops at the 18-month window.
   Why now: The kernel is the six-month rule, so it is proven first, end to end, with the scaffold inside this slice. Every later slice lands on a working page.
   PRD ref: `prd.md > The Core Journey`, `prd.md > Benefit Picker`, `prd.md > Month Picker`, `prd.md > Situation Questions`, `prd.md > Medi-Cal Standard Schedule (12 months)`, `prd.md > Medi-Cal New Adult Schedule (6 months from March 2027)`, `prd.md > Medi-Cal "Not Sure" Toggle`, `prd.md > Why This Date? Disclosures`, `prd.md > Always-Visible Lines`
@@ -19,7 +19,7 @@ Build mode: fast
   Learner check: Start the server, open the page at phone width, do Medi-Cal, May 2026, Yes. Does the timeline read the way you pictured, and does the checklist question make sense to a 6th-grade reader?
   Commit: `feat: Medi-Cal renewal timeline with six-month rule and sources`
 
-- [ ] **2. CalFresh SAR 7 schedule and the different-schedule message**
+- [x] **2. CalFresh SAR 7 schedule and the different-schedule message**
   Becomes usable: Tap CalFresh, pick a month, answer the 60+/disabled question. No shows SAR 7 arrival, due (5th), late (11th), the last-chance sentence naming only the month, and the approximate recertification. Yes shows the C7 message only. Not sure shows the message above the standard timeline. Switching benefits resets everything below.
   Why now: Second schedule family exercises the shared walker with day-level dates and the approximate label, and completes both benefits before the calendar file needs them.
   PRD ref: `prd.md > CalFresh Standard Schedule (SAR 7 and recertification)`, `prd.md > CalFresh Different-Schedule Message (60+ or disabled)`, `prd.md > Benefit Picker`
@@ -29,7 +29,7 @@ Build mode: fast
   Learner check: Do CalFresh, October 2026, No, then switch to Yes and Not sure, then tap Medi-Cal and confirm everything below cleared.
   Commit: `feat: CalFresh SAR 7 timeline and 60+/disabled message`
 
-- [ ] **3. Past and future months handled honestly**
+- [x] **3. Past and future months handled honestly**
   Becomes usable: A future month shows "That month hasn't happened yet. Check the date on your letter." and nothing else. An old month counts forward with the plain note, applying 12-or-6 at each step. The current month computes normally. The results state the month counted as "this month".
   Why now: These are the edge states a real letter produces; they must be right before the calendar file freezes dates into reminders.
   PRD ref: `prd.md > Month Picker`, `prd.md > Counting Forward`, `prd.md > States and Boundaries`
@@ -39,7 +39,7 @@ Build mode: fast
   Learner check: Try a 2024 month and a month after today; read both messages aloud for tone.
   Commit: `feat: future-month guard and counted-forward note`
 
-- [ ] **4. One-tap calendar file with validated reminders**
+- [x] **4. One-tap calendar file with validated reminders**
   Becomes usable: "Add these to my calendar" downloads renewal-radar.ics with every in-window event, 7-day alerts, and a 9 a.m. same-day alert on the SAR 7 due date. The file for Medi-Cal Not sure follows the toggle.
   Why now: The payoff behavior, and the spec's biggest unknown; the parse-back test is the agreed evidence since no phone is available.
   PRD ref: `prd.md > Calendar Reminder File`
@@ -49,7 +49,7 @@ Build mode: fast
   Learner check: Tap the calendar button on the demo case and open the downloaded file in a text editor; confirm the events match the timeline.
   Commit: `feat: downloadable .ics reminders with RFC 5545 parse-back tests`
 
-- [ ] **5. Library-handout look, themes, font, README and license**
+- [x] **5. Library-handout look, themes, font, README and license**
   Becomes usable: The page looks like the PRD describes: Atkinson Hyperlegible self-hosted with fallback, teal and amber tokens, light and dark themes, 48px controls, favicon, reduced-motion respect, noscript fallback. README explains run, test, sources, and what is not verified. LICENSE is AGPL-3.0-or-later, Techempower; fonts carry the OFL.
   Why now: Visual polish last so it styles finished behavior; the README's "not verified" line needs the final calendar behavior to describe.
   PRD ref: `prd.md > Look and Feel`, `prd.md > Screens and Layout`
@@ -61,7 +61,7 @@ Build mode: fast
 
 ## Hands-on Checkpoints
 
-- [ ] Early usable behavior explored — after slice 1 (Medi-Cal demo case), where feedback on tone, layout and the checklist question shapes slices 2 to 5
+- [x] Early usable behavior explored — after slice 1 (Medi-Cal demo case). At the learner's request the agent stated what a person would see and continued; the hands-on review was folded into the final kick-the-tires session.
 - [ ] Final kick-the-tires exploration and feedback completed
 
 ## Final Review
