@@ -13,7 +13,7 @@ const CRLF = '\r\n';
 export function escapeText(s) {
   return String(s)
     .replace(/\\/g, '\\\\')
-    .replace(/;/g, '\;')
+    .replace(/;/g, '\\;')
     .replace(/,/g, '\\,')
     .replace(/\r?\n/g, '\\n');
 }
