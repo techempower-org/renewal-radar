@@ -50,7 +50,7 @@ function demoFile() {
 }
 
 test('escapeText and foldLine', () => {
-  assert.equal(escapeText('a,b;c\\d\ne'), 'a\\,b\;c\\\\d\\ne');
+  assert.equal(escapeText('a,b;c\\d\ne'), 'a\\,b\\;c\\\\d\\ne');
   const long = 'DESCRIPTION:' + 'x'.repeat(200);
   const folded = foldLine(long);
   for (const l of folded.split('\r\n')) assert.ok(Buffer.byteLength(l) <= 75);

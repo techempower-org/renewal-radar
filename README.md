@@ -62,6 +62,8 @@ devpost/          planning docs from the hackathon curriculum
 
 The planning documents in `devpost/` were produced with the Devpost Learn **Build With AI: Basics** skill pack from [github.com/challengepost/learn-ai-basics](https://github.com/challengepost/learn-ai-basics). `skills-lock.json` records the exact skill versions used; the skill folders themselves are not committed.
 
+The app itself was built by TechEMPOWER's team with **Claude Code agents** running that skill pack, starting from an empty folder on 2026-10-23. There is no pre-existing code: everything here was written for this entry. The only third-party component is the Atkinson Hyperlegible font (see License).
+
 ## License
 
 Copyright (C) 2026 Techempower. Licensed under the GNU Affero General Public License, version 3 or later; see [LICENSE](LICENSE).
